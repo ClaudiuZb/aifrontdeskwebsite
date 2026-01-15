@@ -4,14 +4,34 @@ import { useRef, useState } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { Check, Sparkles, ArrowRight, Info } from 'lucide-react'
 
-const pricingTabs = [
+type PricingTabId = 'websites' | 'automation' | 'software' | 'combo'
+
+type PricingTab = {
+  id: PricingTabId
+  label: string
+}
+
+type PricingPlan = {
+  name: string
+  price: string
+  description: string
+  features: string[]
+  cta: string
+  popular?: boolean
+  badge?: string
+  priceNote?: string
+}
+
+type PricingData = Record<PricingTabId, PricingPlan[]>
+
+const pricingTabs: PricingTab[] = [
   { id: 'websites', label: 'Website-uri' },
   { id: 'automation', label: 'Automatizari AI' },
   { id: 'software', label: 'Software' },
   { id: 'combo', label: 'Pachete Complete' },
 ]
 
-const pricingData = {
+const pricingData: PricingData = {
   websites: [
     {
       name: 'Website Profesional',
@@ -159,23 +179,22 @@ const pricingData = {
 }
 
 export default function Pricing() {
-  const ref = useRef(null)
+  const ref = useRef<HTMLElement | null>(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
-  const [activeTab, setActiveTab] = useState('automation')
+  const [activeTab, setActiveTab] = useState<PricingTabId>('automation')
+
+  const plans = pricingData[activeTab]
 
   return (
     <section id="preturi" ref={ref} className="relative py-32 overflow-hidden">
-      {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-dark-900 via-dark-800 to-dark-900" />
       <div className="absolute inset-0 bg-grid-pattern bg-grid opacity-10" />
 
-      {/* Decorative */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
       <div className="absolute top-1/3 -left-32 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
       <div className="absolute bottom-1/3 -right-32 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -189,12 +208,11 @@ export default function Pricing() {
             Pachete Clare, <span className="gradient-text">Fara Surprize</span>
           </h2>
           <p className="section-subtitle mx-auto">
-            Alege pachetul potrivit pentru nevoile tale. Toate preturile includ
-            implementare, training si suport.
+            Alege pachetul potrivit pentru nevoile tale. Toate preturile includ implementare,
+            training si suport.
           </p>
         </motion.div>
 
-        {/* Tabs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -216,7 +234,6 @@ export default function Pricing() {
           ))}
         </motion.div>
 
-        {/* Pricing Cards */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
@@ -225,89 +242,77 @@ export default function Pricing() {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4 }}
             className={`grid gap-6 ${
-              pricingData[activeTab as keyof typeof pricingData].length === 1
+              plans.length === 1
                 ? 'max-w-lg mx-auto'
-                : pricingData[activeTab as keyof typeof pricingData].length === 2
+                : plans.length === 2
                 ? 'md:grid-cols-2 max-w-4xl mx-auto'
                 : 'md:grid-cols-3'
             }`}
           >
-            {pricingData[activeTab as keyof typeof pricingData].map(
-              (plan, index) => (
-                <motion.div
-                  key={plan.name}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className={`relative ${plan.popular ? 'md:-mt-4 md:mb-4' : ''}`}
-                >
-                  {/* Popular Badge */}
-                  {plan.badge && (
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
-                      <span className="inline-flex items-center gap-1 px-4 py-1.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full text-white text-sm font-semibold shadow-lg">
-                        <Sparkles className="w-4 h-4" />
-                        {plan.badge}
-                      </span>
-                    </div>
-                  )}
-
-                  <div
-                    className={`h-full glass-card rounded-3xl p-8 ${
-                      plan.popular
-                        ? 'border-cyan-500/50 bg-gradient-to-b from-cyan-500/10 to-purple-500/5'
-                        : ''
-                    }`}
-                  >
-                    {/* Plan Name */}
-                    <h3 className="text-xl font-bold text-white mb-2">
-                      {plan.name}
-                    </h3>
-                    <p className="text-gray-400 text-sm mb-6">{plan.description}</p>
-
-                    {/* Price */}
-                    <div className="flex items-baseline gap-1 mb-8">
-                      {plan.priceNote && (
-                        <span className="text-gray-400 text-sm">{plan.priceNote}</span>
-                      )}
-                      <span className="text-4xl font-bold gradient-text">
-                        {plan.price}
-                      </span>
-                      <span className="text-gray-400">EUR</span>
-                    </div>
-
-                    {/* Features */}
-                    <ul className="space-y-3 mb-8">
-                      {plan.features.map((feature, i) => (
-                        <li key={i} className="flex items-start gap-3">
-                          <div className="flex-shrink-0 w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center mt-0.5">
-                            <Check className="w-3 h-3 text-cyan-400" />
-                          </div>
-                          <span className="text-gray-300 text-sm">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    {/* CTA */}
-                    <motion.a
-                      href="#contact"
-                      className={`block w-full py-4 px-6 rounded-xl font-semibold text-center transition-all ${
-                        plan.popular
-                          ? 'bg-gradient-to-r from-cyan-600 to-purple-600 text-white hover:shadow-lg hover:shadow-purple-500/25'
-                          : 'glass border border-white/10 text-white hover:border-cyan-500/50 hover:bg-white/5'
-                      }`}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      {plan.cta}
-                    </motion.a>
+            {plans.map((plan, index) => (
+              <motion.div
+                key={plan.name}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className={`relative ${plan.popular ? 'md:-mt-4 md:mb-4' : ''}`}
+              >
+                {plan.badge ? (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+                    <span className="inline-flex items-center gap-1 px-4 py-1.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full text-white text-sm font-semibold shadow-lg">
+                      <Sparkles className="w-4 h-4" />
+                      {plan.badge}
+                    </span>
                   </div>
-                </motion.div>
-              )
-            )}
+                ) : null}
+
+                <div
+                  className={`h-full glass-card rounded-3xl p-8 ${
+                    plan.popular
+                      ? 'border-cyan-500/50 bg-gradient-to-b from-cyan-500/10 to-purple-500/5'
+                      : ''
+                  }`}
+                >
+                  <h3 className="text-xl font-bold text-white mb-2">{plan.name}</h3>
+                  <p className="text-gray-400 text-sm mb-6">{plan.description}</p>
+
+                  <div className="flex items-baseline gap-1 mb-8">
+                    {plan.priceNote ? (
+                      <span className="text-gray-400 text-sm">{plan.priceNote}</span>
+                    ) : null}
+                    <span className="text-4xl font-bold gradient-text">{plan.price}</span>
+                    <span className="text-gray-400">EUR</span>
+                  </div>
+
+                  <ul className="space-y-3 mb-8">
+                    {plan.features.map((feature, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <div className="flex-shrink-0 w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center mt-0.5">
+                          <Check className="w-3 h-3 text-cyan-400" />
+                        </div>
+                        <span className="text-gray-300 text-sm">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <motion.a
+                    href="#contact"
+                    className={`block w-full py-4 px-6 rounded-xl font-semibold text-center transition-all ${
+                      plan.popular
+                        ? 'bg-gradient-to-r from-cyan-600 to-purple-600 text-white hover:shadow-lg hover:shadow-purple-500/25'
+                        : 'glass border border-white/10 text-white hover:border-cyan-500/50 hover:bg-white/5'
+                    }`}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    {plan.cta}
+                  </motion.a>
+                </div>
+              </motion.div>
+            ))}
           </motion.div>
         </AnimatePresence>
 
-        {/* Trust Badges */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -321,10 +326,7 @@ export default function Pricing() {
               { label: 'Suport Real', icon: '💬' },
               { label: 'Fara costuri ascunse', icon: '✅' },
             ].map((badge) => (
-              <div
-                key={badge.label}
-                className="flex items-center gap-2 text-gray-400"
-              >
+              <div key={badge.label} className="flex items-center gap-2 text-gray-400">
                 <span className="text-xl">{badge.icon}</span>
                 <span className="text-sm">{badge.label}</span>
               </div>
@@ -332,7 +334,6 @@ export default function Pricing() {
           </div>
         </motion.div>
 
-        {/* Custom Quote CTA */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -345,8 +346,8 @@ export default function Pricing() {
               Ai nevoie de un pachet personalizat?
             </h3>
             <p className="text-gray-400 mb-8 max-w-lg mx-auto">
-              Discutam si cream o solutie exact pe nevoile afacerii tale. Consultatie
-              gratuita, fara obligatii.
+              Discutam si cream o solutie exact pe nevoile afacerii tale. Consultatie gratuita,
+              fara obligatii.
             </p>
             <a
               href="#contact"
@@ -361,3 +362,4 @@ export default function Pricing() {
     </section>
   )
 }
+

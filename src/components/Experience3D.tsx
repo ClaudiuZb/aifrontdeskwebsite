@@ -11,18 +11,15 @@ import {
   Sparkles,
   useScroll,
   ScrollControls,
-  Html,
   MeshTransmissionMaterial,
   Torus,
   Box,
   Icosahedron,
+  Line,
 } from '@react-three/drei'
 import * as THREE from 'three'
-import { useSpring, animated } from '@react-spring/three'
+import { useSpring } from '@react-spring/three'
 
-// ============================================
-// MOUSE POSITION HOOK
-// ============================================
 function useMousePosition() {
   const [mouse, setMouse] = useState({ x: 0, y: 0 })
 
@@ -41,9 +38,6 @@ function useMousePosition() {
   return mouse
 }
 
-// ============================================
-// MAIN AI CORE - Central holographic sphere
-// ============================================
 function AICore({ mouse }: { mouse: { x: number; y: number } }) {
   const meshRef = useRef<THREE.Mesh>(null)
   const glowRef = useRef<THREE.Mesh>(null)
@@ -51,9 +45,9 @@ function AICore({ mouse }: { mouse: { x: number; y: number } }) {
   const ring2Ref = useRef<THREE.Mesh>(null)
   const scroll = useScroll()
 
-  const { scale } = useSpring({
+  useSpring({
     scale: 1,
-    config: { mass: 1, tension: 280, friction: 60 }
+    config: { mass: 1, tension: 280, friction: 60 },
   })
 
   useFrame((state) => {
@@ -61,7 +55,6 @@ function AICore({ mouse }: { mouse: { x: number; y: number } }) {
     const scrollOffset = scroll.offset
 
     if (meshRef.current) {
-      // Smooth mouse follow
       meshRef.current.rotation.x = THREE.MathUtils.lerp(
         meshRef.current.rotation.x,
         mouse.y * 0.3 + t * 0.1,
@@ -73,15 +66,11 @@ function AICore({ mouse }: { mouse: { x: number; y: number } }) {
         0.05
       )
 
-      // Scale and position based on scroll
       const targetScale = 1 - scrollOffset * 0.3
-      meshRef.current.scale.setScalar(THREE.MathUtils.lerp(
-        meshRef.current.scale.x,
-        targetScale,
-        0.1
-      ))
+      meshRef.current.scale.setScalar(
+        THREE.MathUtils.lerp(meshRef.current.scale.x, targetScale, 0.1)
+      )
 
-      // Move up and back as scroll
       meshRef.current.position.y = THREE.MathUtils.lerp(
         meshRef.current.position.y,
         scrollOffset * 3,
@@ -113,7 +102,6 @@ function AICore({ mouse }: { mouse: { x: number; y: number } }) {
   return (
     <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.3}>
       <group>
-        {/* Outer glow */}
         <Sphere ref={glowRef} args={[1.5, 32, 32]}>
           <meshBasicMaterial
             color="#00f5ff"
@@ -123,7 +111,6 @@ function AICore({ mouse }: { mouse: { x: number; y: number } }) {
           />
         </Sphere>
 
-        {/* Main sphere */}
         <Sphere ref={meshRef} args={[1, 128, 128]}>
           <MeshDistortMaterial
             color="#a855f7"
@@ -135,22 +122,18 @@ function AICore({ mouse }: { mouse: { x: number; y: number } }) {
           />
         </Sphere>
 
-        {/* Inner core */}
         <Sphere args={[0.7, 64, 64]}>
           <meshBasicMaterial color="#00f5ff" transparent opacity={0.3} />
         </Sphere>
 
-        {/* Orbital ring 1 */}
         <Torus ref={ringRef} args={[1.8, 0.02, 16, 100]}>
           <meshBasicMaterial color="#00f5ff" transparent opacity={0.6} />
         </Torus>
 
-        {/* Orbital ring 2 */}
         <Torus ref={ring2Ref} args={[2.2, 0.015, 16, 100]} rotation={[Math.PI / 3, 0, 0]}>
           <meshBasicMaterial color="#f472b6" transparent opacity={0.4} />
         </Torus>
 
-        {/* Orbital ring 3 */}
         <Torus args={[2.6, 0.01, 16, 100]} rotation={[Math.PI / 2, Math.PI / 4, 0]}>
           <meshBasicMaterial color="#a855f7" transparent opacity={0.3} />
         </Torus>
@@ -159,15 +142,20 @@ function AICore({ mouse }: { mouse: { x: number; y: number } }) {
   )
 }
 
-// ============================================
-// FLOATING DATA CUBES
-// ============================================
+type CubeData = {
+  position: [number, number, number]
+  rotation: [number, number, number]
+  scale: number
+  color: string
+  speed: number
+}
+
 function DataCubes({ mouse }: { mouse: { x: number; y: number } }) {
   const groupRef = useRef<THREE.Group>(null)
-  const scroll = useScroll()
+  useScroll()
 
   const cubes = useMemo(() => {
-    const arr = []
+    const arr: CubeData[] = []
     const colors = ['#00f5ff', '#a855f7', '#f472b6', '#3b82f6']
     for (let i = 0; i < 20; i++) {
       arr.push({
@@ -175,12 +163,12 @@ function DataCubes({ mouse }: { mouse: { x: number; y: number } }) {
           (Math.random() - 0.5) * 20,
           (Math.random() - 0.5) * 15,
           (Math.random() - 0.5) * 15 - 5,
-        ] as [number, number, number],
+        ],
         rotation: [
           Math.random() * Math.PI,
           Math.random() * Math.PI,
           Math.random() * Math.PI,
-        ] as [number, number, number],
+        ],
         scale: Math.random() * 0.3 + 0.1,
         color: colors[Math.floor(Math.random() * colors.length)],
         speed: Math.random() * 0.5 + 0.5,
@@ -191,10 +179,8 @@ function DataCubes({ mouse }: { mouse: { x: number; y: number } }) {
 
   useFrame((state) => {
     const t = state.clock.elapsedTime
-    const scrollOffset = scroll.offset
 
     if (groupRef.current) {
-      // Rotate based on mouse
       groupRef.current.rotation.y = THREE.MathUtils.lerp(
         groupRef.current.rotation.y,
         mouse.x * 0.2,
@@ -206,7 +192,6 @@ function DataCubes({ mouse }: { mouse: { x: number; y: number } }) {
         0.02
       )
 
-      // Animate cubes
       groupRef.current.children.forEach((cube, i) => {
         cube.rotation.x += cubes[i].speed * 0.01
         cube.rotation.y += cubes[i].speed * 0.015
@@ -239,9 +224,6 @@ function DataCubes({ mouse }: { mouse: { x: number; y: number } }) {
   )
 }
 
-// ============================================
-// PARTICLE FIELD - Responsive particles
-// ============================================
 function ParticleField({ mouse }: { mouse: { x: number; y: number } }) {
   const particlesRef = useRef<THREE.Points>(null)
   const scroll = useScroll()
@@ -284,11 +266,9 @@ function ParticleField({ mouse }: { mouse: { x: number; y: number } }) {
     const scrollOffset = scroll.offset
 
     if (particlesRef.current) {
-      // Rotate based on mouse and time
       particlesRef.current.rotation.y = t * 0.03 + mouse.x * 0.1
       particlesRef.current.rotation.x = Math.sin(t * 0.05) * 0.1 + mouse.y * 0.05
 
-      // Expand on scroll
       const scale = 1 + scrollOffset * 1.5
       particlesRef.current.scale.setScalar(scale)
     }
@@ -314,39 +294,42 @@ function ParticleField({ mouse }: { mouse: { x: number; y: number } }) {
   )
 }
 
-// ============================================
-// NEURAL NETWORK CONNECTIONS
-// ============================================
+type NeuralNode = {
+  position: [number, number, number]
+  connections: number[]
+}
+
+type LineSegment = [[number, number, number], [number, number, number]]
+
 function NeuralNetwork({ mouse }: { mouse: { x: number; y: number } }) {
   const groupRef = useRef<THREE.Group>(null)
   const scroll = useScroll()
 
   const nodes = useMemo(() => {
-    const arr = []
+    const arr: NeuralNode[] = []
     for (let i = 0; i < 30; i++) {
       arr.push({
         position: [
           (Math.random() - 0.5) * 12,
           (Math.random() - 0.5) * 12,
           (Math.random() - 0.5) * 8 - 3,
-        ] as [number, number, number],
-        connections: [] as number[],
+        ],
+        connections: [],
       })
     }
 
-    // Create connections
-    arr.forEach((node, i) => {
+    arr.forEach((node) => {
       const nearestCount = Math.floor(Math.random() * 3) + 1
       const distances = arr.map((other, j) => ({
         index: j,
         distance: Math.sqrt(
           Math.pow(node.position[0] - other.position[0], 2) +
-          Math.pow(node.position[1] - other.position[1], 2) +
-          Math.pow(node.position[2] - other.position[2], 2)
+            Math.pow(node.position[1] - other.position[1], 2) +
+            Math.pow(node.position[2] - other.position[2], 2)
         ),
       }))
       distances.sort((a, b) => a.distance - b.distance)
-      node.connections = distances.slice(1, nearestCount + 1).map(d => d.index)
+      node.connections = distances.slice(1, nearestCount + 1).map((d) => d.index)
     })
 
     return arr
@@ -360,12 +343,13 @@ function NeuralNetwork({ mouse }: { mouse: { x: number; y: number } }) {
       groupRef.current.rotation.y = t * 0.02 + mouse.x * 0.1
       groupRef.current.rotation.x = mouse.y * 0.05
 
-      // Fade in as scroll progresses
       const opacity = Math.min(scrollOffset * 3, 0.6)
       groupRef.current.children.forEach((child) => {
         if (child instanceof THREE.Mesh || child instanceof THREE.Line) {
-          if (child.material instanceof THREE.MeshBasicMaterial ||
-              child.material instanceof THREE.LineBasicMaterial) {
+          if (
+            child.material instanceof THREE.MeshBasicMaterial ||
+            child.material instanceof THREE.LineBasicMaterial
+          ) {
             child.material.opacity = opacity
           }
         }
@@ -373,20 +357,14 @@ function NeuralNetwork({ mouse }: { mouse: { x: number; y: number } }) {
     }
   })
 
-  const lineGeometry = useMemo(() => {
-    const lines: THREE.BufferGeometry[] = []
-    nodes.forEach((node, i) => {
-      node.connections.forEach(j => {
-        const geometry = new THREE.BufferGeometry()
-        const positions = new Float32Array([
-          ...node.position,
-          ...nodes[j].position,
-        ])
-        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-        lines.push(geometry)
+  const lineSegments = useMemo(() => {
+    const segs: LineSegment[] = []
+    nodes.forEach((node) => {
+      node.connections.forEach((j) => {
+        segs.push([node.position, nodes[j].position])
       })
     })
-    return lines
+    return segs
   }, [nodes])
 
   return (
@@ -397,35 +375,38 @@ function NeuralNetwork({ mouse }: { mouse: { x: number; y: number } }) {
           <meshBasicMaterial color="#00f5ff" transparent opacity={0.6} />
         </mesh>
       ))}
-      {lineGeometry.map((geo, i) => (
-        <line key={`line-${i}`} geometry={geo}>
-          <lineBasicMaterial color="#a855f7" transparent opacity={0.3} />
-        </line>
+      {lineSegments.map((seg, i) => (
+        <Line
+          key={`line-${i}`}
+          points={seg}
+          color="#a855f7"
+          transparent
+          opacity={0.3}
+        />
       ))}
     </group>
   )
 }
 
-// ============================================
-// FLOATING SERVICE ICONS
-// ============================================
 function ServiceIcons({ mouse }: { mouse: { x: number; y: number } }) {
   const groupRef = useRef<THREE.Group>(null)
   const scroll = useScroll()
 
-  const icons = useMemo(() => [
-    { position: [-5, 2, -3], color: '#00f5ff', shape: 'icosahedron' },
-    { position: [5, 1, -2], color: '#a855f7', shape: 'octahedron' },
-    { position: [-4, -2, -4], color: '#f472b6', shape: 'dodecahedron' },
-    { position: [4, -1, -3], color: '#3b82f6', shape: 'tetrahedron' },
-  ], [])
+  const icons = useMemo(
+    () => [
+      { position: [-5, 2, -3] as [number, number, number], color: '#00f5ff' },
+      { position: [5, 1, -2] as [number, number, number], color: '#a855f7' },
+      { position: [-4, -2, -4] as [number, number, number], color: '#f472b6' },
+      { position: [4, -1, -3] as [number, number, number], color: '#3b82f6' },
+    ],
+    []
+  )
 
   useFrame((state) => {
     const t = state.clock.elapsedTime
     const scrollOffset = scroll.offset
 
     if (groupRef.current) {
-      // Show during services section (20-50% scroll)
       const visible = scrollOffset > 0.15 && scrollOffset < 0.5
       groupRef.current.visible = visible
 
@@ -460,9 +441,6 @@ function ServiceIcons({ mouse }: { mouse: { x: number; y: number } }) {
   )
 }
 
-// ============================================
-// CAMERA CONTROLLER
-// ============================================
 function CameraController({ mouse }: { mouse: { x: number; y: number } }) {
   const { camera } = useThree()
   const scroll = useScroll()
@@ -470,7 +448,6 @@ function CameraController({ mouse }: { mouse: { x: number; y: number } }) {
   useFrame(() => {
     const scrollOffset = scroll.offset
 
-    // Camera position based on scroll
     const targetZ = 8 - scrollOffset * 4
     const targetY = scrollOffset * 2
     const targetX = mouse.x * 0.5
@@ -479,22 +456,17 @@ function CameraController({ mouse }: { mouse: { x: number; y: number } }) {
     camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, 0.02)
     camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, 0.02)
 
-    // Look at center with slight offset based on mouse
     camera.lookAt(mouse.x * 0.3, mouse.y * 0.3, 0)
   })
 
   return null
 }
 
-// ============================================
-// SCENE CONTENT
-// ============================================
 function SceneContent() {
   const mouse = useMousePosition()
 
   return (
     <>
-      {/* Lighting */}
       <ambientLight intensity={0.3} />
       <pointLight position={[10, 10, 10]} intensity={1} color="#00f5ff" />
       <pointLight position={[-10, -10, -10]} intensity={0.5} color="#a855f7" />
@@ -507,10 +479,8 @@ function SceneContent() {
         color="#ffffff"
       />
 
-      {/* Environment */}
       <Environment preset="night" />
 
-      {/* Background stars */}
       <Stars
         radius={100}
         depth={100}
@@ -521,35 +491,21 @@ function SceneContent() {
         speed={1}
       />
 
-      {/* Sparkles */}
-      <Sparkles
-        count={200}
-        scale={20}
-        size={3}
-        speed={0.5}
-        color="#00f5ff"
-        opacity={0.5}
-      />
+      <Sparkles count={200} scale={20} size={3} speed={0.5} color="#00f5ff" opacity={0.5} />
 
-      {/* Main elements */}
       <AICore mouse={mouse} />
       <ParticleField mouse={mouse} />
       <DataCubes mouse={mouse} />
       <NeuralNetwork mouse={mouse} />
       <ServiceIcons mouse={mouse} />
 
-      {/* Camera controller */}
       <CameraController mouse={mouse} />
 
-      {/* Fog for depth */}
       <fog attach="fog" args={['#030014', 8, 40]} />
     </>
   )
 }
 
-// ============================================
-// MAIN EXPERIENCE COMPONENT
-// ============================================
 export default function Experience3D() {
   return (
     <div className="canvas-container">
