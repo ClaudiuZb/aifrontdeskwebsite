@@ -39,6 +39,7 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
 body {
@@ -47,6 +48,39 @@ body {
   font-family: 'Inter', system-ui, sans-serif;
   overflow-x: hidden;
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* GPU acceleration for smooth animations */
+.main-content,
+.feature-card,
+.pricing-card,
+.testimonial-card,
+.faq-item,
+.glass-card,
+.stat-item,
+.btn-primary,
+.btn-secondary,
+.btn-launch {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 /* ========================================
@@ -464,12 +498,18 @@ body {
 
 .stat-item {
   text-align: center;
-  padding: 40px;
+  padding: 20px 10px;
+}
+
+@media (min-width: 768px) {
+  .stat-item {
+    padding: 40px;
+  }
 }
 
 .stat-number {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(48px, 8vw, 80px);
+  font-size: clamp(28px, 6vw, 80px);
   font-weight: 700;
   background: var(--gradient-linear);
   -webkit-background-clip: text;
@@ -478,11 +518,11 @@ body {
 }
 
 .stat-label {
-  font-size: 14px;
+  font-size: clamp(10px, 2vw, 14px);
   color: var(--text-secondary);
   text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-top: 12px;
+  letter-spacing: 1px;
+  margin-top: 8px;
 }
 
 /* ========================================
