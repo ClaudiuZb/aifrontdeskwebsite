@@ -279,7 +279,7 @@ body {
 
 .hero-title-large {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(60px, 12vw, 140px);
+  font-size: clamp(36px, 10vw, 140px);
   font-weight: 700;
   line-height: 0.95;
   margin-bottom: 10px;
@@ -865,7 +865,7 @@ body {
 
 @media (max-width: 768px) {
   .hero-title-large {
-    font-size: clamp(40px, 15vw, 80px);
+    font-size: clamp(32px, 11vw, 60px);
   }
 
   .section-title {

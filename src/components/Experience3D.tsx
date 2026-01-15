@@ -24,6 +24,7 @@ function useMousePosition() {
   const [mouse, setMouse] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
+    // Desktop mouse move
     const handleMouseMove = (e: MouseEvent) => {
       setMouse({
         x: (e.clientX / window.innerWidth) * 2 - 1,
@@ -31,8 +32,38 @@ function useMousePosition() {
       })
     }
 
+    // Mobile touch move
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0]
+        setMouse({
+          x: (touch.clientX / window.innerWidth) * 2 - 1,
+          y: -(touch.clientY / window.innerHeight) * 2 + 1,
+        })
+      }
+    }
+
+    // Mobile device orientation (gyroscope)
+    const handleOrientation = (e: DeviceOrientationEvent) => {
+      if (e.gamma !== null && e.beta !== null) {
+        // gamma: left-right tilt (-90 to 90)
+        // beta: front-back tilt (-180 to 180)
+        setMouse({
+          x: Math.max(-1, Math.min(1, (e.gamma || 0) / 45)),
+          y: Math.max(-1, Math.min(1, ((e.beta || 0) - 45) / 45)),
+        })
+      }
+    }
+
     window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
+    window.addEventListener('touchmove', handleTouchMove, { passive: true })
+    window.addEventListener('deviceorientation', handleOrientation)
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('touchmove', handleTouchMove)
+      window.removeEventListener('deviceorientation', handleOrientation)
+    }
   }, [])
 
   return mouse
