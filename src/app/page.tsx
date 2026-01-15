@@ -28,6 +28,8 @@ import {
   Award,
   Menu,
   X,
+  ArrowDown,
+  ExternalLink,
 } from 'lucide-react'
 import dynamic from 'next/dynamic'
 
@@ -48,6 +50,63 @@ const Experience3D = dynamic(() => import('@/components/Experience3D'), {
 })
 
 // ============================================
+// ANIMATED SVG LINES
+// ============================================
+function AnimatedLines() {
+  return (
+    <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 2 }}>
+      <defs>
+        <linearGradient id="gradient-line" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#724CE8" />
+          <stop offset="50%" stopColor="#26F4D0" />
+          <stop offset="100%" stopColor="#F8CF3E" />
+        </linearGradient>
+      </defs>
+
+      {/* Horizontal lines */}
+      <motion.line
+        x1="0" y1="20%" x2="100%" y2="20%"
+        stroke="url(#gradient-line)"
+        strokeWidth="1"
+        strokeOpacity="0.1"
+        initial={{ pathLength: 0 }}
+        animate={{ pathLength: 1 }}
+        transition={{ duration: 2, delay: 0.5 }}
+      />
+      <motion.line
+        x1="0" y1="80%" x2="100%" y2="80%"
+        stroke="url(#gradient-line)"
+        strokeWidth="1"
+        strokeOpacity="0.1"
+        initial={{ pathLength: 0 }}
+        animate={{ pathLength: 1 }}
+        transition={{ duration: 2, delay: 0.7 }}
+      />
+
+      {/* Vertical lines */}
+      <motion.line
+        x1="10%" y1="0" x2="10%" y2="100%"
+        stroke="url(#gradient-line)"
+        strokeWidth="1"
+        strokeOpacity="0.05"
+        initial={{ pathLength: 0 }}
+        animate={{ pathLength: 1 }}
+        transition={{ duration: 2, delay: 0.3 }}
+      />
+      <motion.line
+        x1="90%" y1="0" x2="90%" y2="100%"
+        stroke="url(#gradient-line)"
+        strokeWidth="1"
+        strokeOpacity="0.05"
+        initial={{ pathLength: 0 }}
+        animate={{ pathLength: 1 }}
+        transition={{ duration: 2, delay: 0.4 }}
+      />
+    </svg>
+  )
+}
+
+// ============================================
 // SCROLL PROGRESS BAR
 // ============================================
 function ScrollProgress() {
@@ -62,7 +121,7 @@ function ScrollProgress() {
 }
 
 // ============================================
-// NAVIGATION
+// NAVIGATION - ChainGPT Style
 // ============================================
 function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -85,17 +144,20 @@ function Navigation() {
   return (
     <>
       <motion.nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled ? 'nav-glass py-4' : 'py-6'
-        }`}
+        className={`nav-container ${isScrolled ? 'scrolled' : ''}`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
       >
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          <a href="#" className="text-2xl font-bold font-display relative z-10">
-            <span className="text-white">AI</span>
-            <span className="gradient-text">FrontDesk</span>
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <a href="#" className="text-2xl font-bold font-display relative z-10 flex items-center gap-2">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center">
+              <Bot className="w-6 h-6 text-white" />
+            </div>
+            <span>
+              <span className="text-white">AI</span>
+              <span className="gradient-text">FrontDesk</span>
+            </span>
           </a>
 
           {/* Desktop Navigation */}
@@ -115,7 +177,8 @@ function Navigation() {
               <Phone className="w-4 h-4" />
               <span className="text-sm font-medium">0753 933 660</span>
             </a>
-            <a href="#contact" className="btn-primary btn-glow text-sm px-6 py-3">
+            <a href="#contact" className="btn-launch">
+              <span className="dot-indicator" />
               Consultatie Gratuita
             </a>
           </div>
@@ -140,7 +203,7 @@ function Navigation() {
             exit={{ opacity: 0 }}
           >
             <div
-              className="absolute inset-0 bg-black/80 backdrop-blur-lg"
+              className="absolute inset-0 bg-black/90 backdrop-blur-lg"
               onClick={() => setMobileMenuOpen(false)}
             />
             <motion.div
@@ -181,89 +244,121 @@ function Navigation() {
 }
 
 // ============================================
-// HERO SECTION
+// HERO SECTION - ChainGPT Style with Gradient Stroke Text
 // ============================================
 function HeroSection() {
   return (
-    <section className="hero-section min-h-screen flex items-center justify-center relative pt-20">
-      <div className="section-content text-center px-6">
+    <section className="hero-section min-h-screen flex items-center relative overflow-hidden">
+      <AnimatedLines />
+
+      {/* Background glow effects */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/20 rounded-full blur-[150px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto w-full relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <span className="section-badge mb-8 inline-flex">
-            <Sparkles className="w-4 h-4" />
-            Tehnologie AI de Ultima Generatie
+          <span className="section-label">
+            Viitorul este aici
           </span>
         </motion.div>
 
-        <motion.h1
-          className="hero-title mb-8"
-          initial={{ opacity: 0, y: 40 }}
+        {/* Main Hero Title - ChainGPT Style */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4 }}
         >
-          Transformam{' '}
-          <span className="gradient-text-animated">Afacerea Ta</span>
-          <br />
-          cu <span className="glow-text">AI</span>
-        </motion.h1>
+          <h1 className="hero-title-large text-white mb-2">
+            AUTOMATIZARE
+          </h1>
+          <h1 className="hero-title-large filled-gradient-text">
+            AI
+          </h1>
+        </motion.div>
 
         <motion.p
-          className="hero-subtitle mx-auto mb-12 max-w-2xl"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-        >
-          Website-uri care convertesc. Chatbots AI disponibili 24/7.
-          Automatizari care economisesc timp. Software personalizat pentru succesul tau.
-          <span className="text-cyan-400 font-semibold"> ROI garantat in 90 de zile.</span>
-        </motion.p>
-
-        <motion.div
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
+          className="hero-subtitle"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
         >
-          <a href="#contact" className="btn-primary btn-glow text-lg px-8 py-4">
-            Incepe Acum
-            <ArrowRight className="w-5 h-5" />
-          </a>
-          <a href="#services" className="btn-secondary text-lg px-8 py-4">
-            <Play className="w-5 h-5" />
-            Vezi Serviciile
-          </a>
-        </motion.div>
+          Transformam afaceri din Romania cu tehnologie AI de ultima generatie.
+          Website-uri care convertesc, chatbots disponibili 24/7, automatizari
+          si software personalizat.
+        </motion.p>
 
-        {/* Stats */}
         <motion.div
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto"
-          initial={{ opacity: 0, y: 40 }}
+          className="flex flex-col sm:flex-row gap-4 mt-12"
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1 }}
         >
-          {[
-            { value: '50+', label: 'Proiecte', icon: Rocket },
-            { value: '24/7', label: 'Suport AI', icon: Bot },
-            { value: '90%', label: 'ROI Mediu', icon: TrendingUp },
-            { value: '100%', label: 'Satisfactie', icon: Star },
-          ].map((stat, i) => (
-            <div key={stat.label} className="glass-card p-6 text-center">
-              <stat.icon className="w-8 h-8 mx-auto mb-3 text-cyan-400" />
-              <div className="stat-number text-3xl md:text-4xl">{stat.value}</div>
-              <div className="text-zinc-500 text-sm uppercase tracking-wider">{stat.label}</div>
-            </div>
-          ))}
+          <a href="#contact" className="btn-primary">
+            Incepe Proiectul
+            <ArrowRight className="w-5 h-5" />
+          </a>
+          <a href="#services" className="btn-secondary">
+            <Play className="w-5 h-5" />
+            Exploreaza Serviciile
+          </a>
         </motion.div>
+      </div>
 
-        {/* Scroll indicator */}
-        <div className="scroll-indicator mt-20">
-          <span>Scroll</span>
-          <div className="scroll-indicator-mouse">
-            <div className="scroll-indicator-wheel" />
-          </div>
+      {/* Scroll Indicator */}
+      <motion.div
+        className="scroll-indicator"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5 }}
+      >
+        <span>Scroll</span>
+        <div className="scroll-arrow">
+          <ArrowDown className="w-5 h-5" />
+        </div>
+      </motion.div>
+
+      {/* Side navigation dots */}
+      <div className="menu-button">
+        {[0, 1, 2, 3, 4].map((i) => (
+          <div key={i} className={`menu-dot ${i === 0 ? 'active' : ''}`} />
+        ))}
+      </div>
+    </section>
+  )
+}
+
+// ============================================
+// STATS SECTION - ChainGPT Style
+// ============================================
+function StatsSection() {
+  const stats = [
+    { value: '50+', label: 'Proiecte Finalizate' },
+    { value: '24/7', label: 'Suport AI Activ' },
+    { value: '90%', label: 'ROI Mediu Clienti' },
+    { value: '100%', label: 'Satisfactie Garantata' },
+  ]
+
+  return (
+    <section className="section py-20 border-y border-purple-500/10">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          {stats.map((stat, index) => (
+            <motion.div
+              key={stat.label}
+              className="stat-item"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+            >
+              <div className="stat-number">{stat.value}</div>
+              <div className="stat-label">{stat.label}</div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
@@ -271,33 +366,60 @@ function HeroSection() {
 }
 
 // ============================================
-// SERVICES SECTION
+// AWARDS / TRUSTED BY SECTION
+// ============================================
+function AwardsSection() {
+  const awards = [
+    'Top AI Agency Romania 2026',
+    'Best Chatbot Implementation',
+    'Innovation Excellence Award',
+    'Customer Choice 2025',
+  ]
+
+  return (
+    <section className="py-16 overflow-hidden border-b border-purple-500/10">
+      <div className="marquee">
+        <div className="marquee-content">
+          {[...awards, ...awards].map((award, i) => (
+            <div key={i} className="flex items-center gap-8 mx-8">
+              <Award className="w-6 h-6 text-yellow-400" />
+              <span className="text-lg font-medium text-zinc-400 whitespace-nowrap">{award}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ============================================
+// SERVICES SECTION - ChainGPT Style Cards
 // ============================================
 function ServicesSection() {
   const services = [
     {
       icon: Globe,
       title: 'Website-uri Moderne',
-      description: 'Site-uri ultra-rapide, responsive si optimizate SEO. Design personalizat care reflecta brandul tau si converteste vizitatorii in clienti fideli.',
+      description: 'Site-uri ultra-rapide, responsive si optimizate SEO. Design personalizat care converteste vizitatori in clienti.',
       price: 'de la 500€',
       features: ['Design Custom', 'SEO Optimizat', 'Mobile First', 'Hosting 1 An'],
-      color: 'from-cyan-500 to-blue-500',
+      color: '#26F4D0',
     },
     {
       icon: Bot,
       title: 'Chatbots AI',
-      description: 'Asistenti virtuali inteligenti care raspund instant clientilor 24/7. Antrenati pe datele afacerii tale pentru conversatii naturale.',
+      description: 'Asistenti virtuali inteligenti disponibili 24/7. Antrenati pe datele afacerii tale pentru raspunsuri personalizate.',
       price: 'de la 500€',
       features: ['Disponibil 24/7', 'Integrare WhatsApp', 'Antrenare Custom', 'Analytics'],
-      color: 'from-purple-500 to-pink-500',
+      color: '#724CE8',
     },
     {
       icon: Cpu,
       title: 'Automatizari',
-      description: 'Eliminam munca repetitiva si manuala. Automatizam procesele pentru a economisi timp si a reduce erorile umane.',
+      description: 'Eliminam munca repetitiva prin automatizari inteligente. Economisesti timp si reduci erorile umane.',
       price: 'de la 1000€',
       features: ['Workflow Custom', 'Integrari API', 'Rapoarte Automate', 'Support'],
-      color: 'from-pink-500 to-rose-500',
+      color: '#F8CF3E',
     },
     {
       icon: Code,
@@ -305,29 +427,27 @@ function ServicesSection() {
       description: 'Aplicatii web si mobile create special pentru nevoile unice ale afacerii tale. Scalabile si performante.',
       price: 'de la 2500€',
       features: ['Arhitectura Scalabila', 'API REST', 'Dashboard Admin', 'Documentatie'],
-      color: 'from-blue-500 to-indigo-500',
+      color: '#FC6756',
     },
   ]
 
   return (
-    <section id="services" className="section py-32">
-      <div className="section-content px-6">
+    <section id="services" className="section">
+      <div className="max-w-7xl mx-auto">
         <motion.div
-          className="text-center mb-20"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <span className="section-badge mb-6 inline-flex">
-            <Zap className="w-4 h-4" />
-            Serviciile Noastre
+          <span className="section-label">
+            Ce Oferim
           </span>
           <h2 className="section-title">
-            Solutii <span className="gradient-text">Complete</span> pentru Afacerea Ta
+            Solutii <span className="gradient-text">Complete</span>
           </h2>
-          <p className="section-subtitle mx-auto mt-4">
-            Tot ce ai nevoie pentru a-ti digitaliza afacerea si a creste vanzarile cu tehnologie AI de ultima generatie.
+          <p className="section-subtitle mb-16">
+            Tot ce ai nevoie pentru a-ti digitaliza afacerea si a creste vanzarile cu tehnologie AI.
           </p>
         </motion.div>
 
@@ -335,33 +455,43 @@ function ServicesSection() {
           {services.map((service, index) => (
             <motion.div
               key={service.title}
-              className="service-card group"
+              className="feature-card group"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <div className={`service-icon bg-gradient-to-br ${service.color}`}>
-                <service.icon className="w-10 h-10 text-white" />
+              {/* Corner decorations */}
+              <div className="corner-bracket top-left" />
+              <div className="corner-bracket top-right" />
+              <div className="corner-bracket bottom-left" />
+              <div className="corner-bracket bottom-right" />
+
+              <div
+                className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6"
+                style={{ backgroundColor: `${service.color}20` }}
+              >
+                <service.icon className="w-8 h-8" style={{ color: service.color }} />
               </div>
 
-              <h3 className="text-2xl font-bold text-white mb-4">{service.title}</h3>
+              <h3 className="text-2xl font-bold text-white mb-4 font-display">{service.title}</h3>
               <p className="text-zinc-400 mb-6 leading-relaxed">{service.description}</p>
 
               <div className="grid grid-cols-2 gap-3 mb-6">
                 {service.features.map((feature) => (
                   <div key={feature} className="flex items-center gap-2 text-sm text-zinc-300">
-                    <Check className="w-4 h-4 text-cyan-400 flex-shrink-0" />
+                    <Check className="w-4 h-4 flex-shrink-0" style={{ color: service.color }} />
                     <span>{feature}</span>
                   </div>
                 ))}
               </div>
 
-              <div className="flex items-center justify-between pt-4 border-t border-purple-500/20">
-                <span className="text-2xl font-bold gradient-text">{service.price}</span>
+              <div className="flex items-center justify-between pt-6 border-t border-purple-500/20">
+                <span className="text-2xl font-bold gradient-text font-display">{service.price}</span>
                 <a
                   href="#contact"
-                  className="flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors group-hover:translate-x-1"
+                  className="flex items-center gap-2 text-sm font-medium transition-all group-hover:gap-3"
+                  style={{ color: service.color }}
                 >
                   Afla mai mult
                   <ArrowRight className="w-4 h-4" />
@@ -385,50 +515,44 @@ function TestimonialsSection() {
       role: 'CEO, TechStart SRL',
       content: 'Website-ul realizat de AI Front Desk ne-a crescut conversiile cu 150% in primele 3 luni. Investitia s-a amortizat in mai putin de 60 de zile!',
       rating: 5,
-      image: '/testimonials/alex.jpg',
     },
     {
       name: 'Maria Ionescu',
       role: 'Fondator, BeautyPlus',
       content: 'Chatbot-ul AI raspunde la 80% din intrebari automat. Echipa mea se poate concentra acum pe vanzari, nu pe raspunsuri repetitive.',
       rating: 5,
-      image: '/testimonials/maria.jpg',
     },
     {
       name: 'Andrei Dumitrescu',
       role: 'Manager, LogiTrans',
       content: 'Automatizarile implementate ne-au economisit 40 ore pe saptamana. ROI-ul a fost vizibil din prima luna de functionare.',
       rating: 5,
-      image: '/testimonials/andrei.jpg',
     },
     {
       name: 'Elena Vasilescu',
       role: 'Director, FinanceHub',
       content: 'Profesionalism exceptional si rezultate concrete. Software-ul custom ne-a permis sa scalem de la 10 la 100 de clienti fara probleme.',
       rating: 5,
-      image: '/testimonials/elena.jpg',
     },
   ]
 
   return (
-    <section id="testimonials" className="section py-32">
-      <div className="section-content px-6">
+    <section id="testimonials" className="section">
+      <div className="max-w-7xl mx-auto">
         <motion.div
-          className="text-center mb-20"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <span className="section-badge mb-6 inline-flex">
-            <Star className="w-4 h-4" />
+          <span className="section-label">
             Testimoniale
           </span>
           <h2 className="section-title">
-            Ce Spun <span className="gradient-text">Clientii</span> Nostri
+            Ce Spun <span className="gradient-text">Clientii</span>
           </h2>
-          <p className="section-subtitle mx-auto mt-4">
-            Rezultate reale de la afaceri reale. Citeste experientele clientilor nostri multumiti.
+          <p className="section-subtitle mb-16">
+            Rezultate reale de la afaceri reale din Romania.
           </p>
         </motion.div>
 
@@ -470,14 +594,14 @@ function TestimonialsSection() {
 }
 
 // ============================================
-// PRICING SECTION
+// PRICING SECTION - ChainGPT Style
 // ============================================
 function PricingSection() {
   const packages = [
     {
       name: 'Starter',
       price: '500',
-      description: 'Perfect pentru afaceri mici care vor sa inceapa online',
+      description: 'Perfect pentru afaceri mici',
       features: [
         'Website profesional (5 pagini)',
         'Design responsive modern',
@@ -486,87 +610,82 @@ function PricingSection() {
         'Certificat SSL inclus',
         'Suport tehnic 30 zile',
       ],
-      popular: false,
-      cta: 'Incepe Acum',
+      featured: false,
     },
     {
       name: 'Business',
       price: '1500',
-      description: 'Pachetul complet pentru crestere accelerata',
+      description: 'Pachet complet pentru crestere',
       features: [
         'Website premium (10+ pagini)',
         'Chatbot AI personalizat',
         'Integrare WhatsApp Business',
-        'SEO avansat + Google Ads setup',
+        'SEO avansat + Google Ads',
         'Dashboard analytics',
         'Training echipa (2 ore)',
         'Suport prioritar 90 zile',
       ],
-      popular: true,
-      cta: 'Cel Mai Popular',
+      featured: true,
     },
     {
       name: 'Enterprise',
       price: '3500+',
-      description: 'Solutii complete pentru afaceri serioase',
+      description: 'Solutii complete pentru scale',
       features: [
         'Tot din pachetul Business',
         'Software custom dezvoltat',
         'Automatizari complete',
         'Integrari API avansate',
-        'Migrare date existente',
         'Account manager dedicat',
         'Suport prioritar 12 luni',
         'SLA garantat 99.9%',
       ],
-      popular: false,
-      cta: 'Contacteaza-ne',
+      featured: false,
     },
   ]
 
   return (
-    <section id="pricing" className="section py-32">
-      <div className="section-content px-6">
+    <section id="pricing" className="section">
+      <div className="max-w-7xl mx-auto">
         <motion.div
-          className="text-center mb-20"
+          className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <span className="section-badge mb-6 inline-flex">
-            <Target className="w-4 h-4" />
-            Preturi Transparente
+          <span className="section-label justify-center">
+            Preturi
           </span>
-          <h2 className="section-title">
-            Investeste in <span className="gradient-text">Viitorul</span> Afacerii Tale
+          <h2 className="section-title text-center">
+            Investeste in <span className="gradient-text">Viitor</span>
           </h2>
-          <p className="section-subtitle mx-auto mt-4">
-            Preturi clare, fara surprize. Alege pachetul potrivit sau cere o oferta personalizata.
+          <p className="section-subtitle mx-auto mt-4 text-center">
+            Preturi transparente, fara surprize. Garantie ROI 90 de zile.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-8 items-start">
+        <div className="grid lg:grid-cols-3 gap-8">
           {packages.map((pkg, index) => (
             <motion.div
               key={pkg.name}
-              className={`pricing-card ${pkg.popular ? 'popular' : ''}`}
+              className={`pricing-card ${pkg.featured ? 'featured' : ''}`}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.15 }}
             >
-              {pkg.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-6 py-2 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full text-white text-sm font-semibold whitespace-nowrap">
+              {pkg.featured && (
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-6 py-2 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full text-sm font-semibold whitespace-nowrap">
                   Recomandat
                 </div>
               )}
 
               <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-white mb-2">{pkg.name}</h3>
+                <h3 className="text-2xl font-bold text-white mb-2 font-display">{pkg.name}</h3>
                 <p className="text-zinc-500 text-sm mb-6">{pkg.description}</p>
                 <div className="flex items-baseline justify-center gap-1">
-                  <span className="price">{pkg.price}</span>
+                  <span className="price-value">{pkg.price}</span>
                   <span className="text-zinc-400 text-xl">€</span>
                 </div>
               </div>
@@ -582,20 +701,18 @@ function PricingSection() {
 
               <a
                 href="#contact"
-                className={`block w-full py-4 rounded-full font-semibold text-center transition-all ${
-                  pkg.popular
-                    ? 'btn-primary'
-                    : 'btn-secondary'
+                className={`block w-full py-4 rounded-xl font-semibold text-center transition-all ${
+                  pkg.featured ? 'btn-primary' : 'btn-secondary'
                 }`}
               >
-                {pkg.cta}
+                {pkg.featured ? 'Alege Business' : 'Contacteaza-ne'}
               </a>
             </motion.div>
           ))}
         </div>
 
         <motion.p
-          className="text-center text-zinc-500 mt-12"
+          className="text-center text-zinc-500 mt-12 text-sm"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -617,53 +734,49 @@ function FAQSection() {
   const faqs = [
     {
       question: 'Cat dureaza crearea unui website?',
-      answer: 'Timpul de livrare depinde de complexitatea proiectului. Un website standard se livreaza in 2-3 saptamani, unul complex cu functionalitati custom in 4-6 saptamani. Oferim si servicii express pentru proiecte urgente.',
+      answer: 'Un website standard se livreaza in 2-3 saptamani, unul complex cu functionalitati custom in 4-6 saptamani. Oferim si servicii express pentru proiecte urgente.',
     },
     {
       question: 'Ce este inclus in pretul unui chatbot AI?',
-      answer: 'Pretul include: configurarea chatbot-ului, antrenarea pe datele afacerii tale, integrarea pe website sau WhatsApp, dashboard de analytics, si 30 de zile de suport tehnic. Actualizarile sunt incluse in primul an.',
+      answer: 'Pretul include: configurarea chatbot-ului, antrenarea pe datele afacerii tale, integrarea pe website sau WhatsApp, dashboard de analytics, si 30 de zile de suport tehnic.',
     },
     {
       question: 'Oferiti garantie pentru serviciile voastre?',
-      answer: 'Da! Oferim garantie ROI de 90 de zile pentru toate pachetele Business si Enterprise. Daca nu vezi o crestere masurabila in conversii sau eficienta, lucram gratuit pana cand obtii rezultatele promise.',
+      answer: 'Da! Oferim garantie ROI de 90 de zile pentru toate pachetele Business si Enterprise. Daca nu vezi o crestere masurabila, lucram gratuit pana obtii rezultatele promise.',
     },
     {
       question: 'Pot sa platesc in rate?',
-      answer: 'Absolut! Oferim planuri de plata in rate fara dobanda pentru proiecte de peste 1000€. De obicei: 50% avans, 25% la jumatatea proiectului, si 25% la finalizare.',
+      answer: 'Absolut! Oferim planuri de plata in rate fara dobanda pentru proiecte de peste 1000€. De obicei: 50% avans, 25% la jumatatea proiectului, 25% la finalizare.',
     },
     {
       question: 'Ce tehnologii folositi?',
-      answer: 'Folosim cele mai moderne tehnologii: React/Next.js pentru frontend, Node.js/Python pentru backend, si modele AI de la OpenAI si Anthropic pentru chatbots. Toate solutiile sunt scalabile si securizate.',
+      answer: 'Folosim cele mai moderne tehnologii: React/Next.js pentru frontend, Node.js/Python pentru backend, si modele AI de la OpenAI si Anthropic pentru chatbots.',
     },
     {
       question: 'Oferiti suport dupa finalizarea proiectului?',
-      answer: 'Da, oferim pachete de suport si mentenanta lunare incepand de la 100€/luna. Include: actualizari de securitate, backup-uri zilnice, monitorizare 24/7, si suport tehnic prioritar.',
+      answer: 'Da, oferim pachete de suport si mentenanta lunare incepand de la 100€/luna. Include: actualizari de securitate, backup-uri zilnice, monitorizare 24/7.',
     },
   ]
 
   return (
-    <section id="faq" className="section py-32">
-      <div className="section-content px-6">
+    <section id="faq" className="section">
+      <div className="max-w-4xl mx-auto">
         <motion.div
-          className="text-center mb-20"
+          className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <span className="section-badge mb-6 inline-flex">
-            <MessageSquare className="w-4 h-4" />
-            Intrebari Frecvente
+          <span className="section-label justify-center">
+            FAQ
           </span>
-          <h2 className="section-title">
-            Ai <span className="gradient-text">Intrebari</span>?
+          <h2 className="section-title text-center">
+            Intrebari <span className="gradient-text">Frecvente</span>
           </h2>
-          <p className="section-subtitle mx-auto mt-4">
-            Gaseste raspunsuri la cele mai frecvente intrebari sau contacteaza-ne direct.
-          </p>
         </motion.div>
 
-        <div className="max-w-3xl mx-auto space-y-4">
+        <div className="space-y-4">
           {faqs.map((faq, index) => (
             <motion.div
               key={index}
@@ -709,8 +822,8 @@ function FAQSection() {
 // ============================================
 function ContactSection() {
   return (
-    <section id="contact" className="section py-32">
-      <div className="section-content px-6">
+    <section id="contact" className="section">
+      <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
@@ -718,41 +831,40 @@ function ContactSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <span className="section-badge mb-6 inline-flex">
-              <Headphones className="w-4 h-4" />
+            <span className="section-label">
               Contact
             </span>
-            <h2 className="section-title mb-4">
+            <h2 className="section-title">
               Hai sa <span className="gradient-text">Vorbim</span>
             </h2>
             <p className="section-subtitle mb-10">
-              Programeaza o consultatie gratuita de 30 de minute. Analizam afacerea ta si
-              propunem solutii concrete cu ROI masurabil.
+              Programeaza o consultatie gratuita de 30 de minute.
+              Analizam afacerea ta si propunem solutii concrete.
             </p>
 
             <div className="space-y-4">
               <a
                 href="tel:+40753933660"
-                className="flex items-center gap-4 p-5 glass-card hover:scale-[1.02] transition-transform"
+                className="flex items-center gap-4 p-5 glass-card"
               >
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center">
-                  <Phone className="w-7 h-7 text-white" />
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 flex items-center justify-center border border-cyan-500/20">
+                  <Phone className="w-6 h-6 text-cyan-400" />
                 </div>
                 <div>
-                  <div className="text-sm text-zinc-500">Telefon</div>
+                  <div className="text-sm text-zinc-500 mb-1">Telefon</div>
                   <div className="text-xl font-semibold text-white">0753 933 660</div>
                 </div>
               </a>
 
               <a
                 href="mailto:contact@aifrontdesk.ro"
-                className="flex items-center gap-4 p-5 glass-card hover:scale-[1.02] transition-transform"
+                className="flex items-center gap-4 p-5 glass-card"
               >
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-                  <Mail className="w-7 h-7 text-white" />
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-500/5 flex items-center justify-center border border-purple-500/20">
+                  <Mail className="w-6 h-6 text-purple-400" />
                 </div>
                 <div>
-                  <div className="text-sm text-zinc-500">Email</div>
+                  <div className="text-sm text-zinc-500 mb-1">Email</div>
                   <div className="text-xl font-semibold text-white">contact@aifrontdesk.ro</div>
                 </div>
               </a>
@@ -761,19 +873,19 @@ function ContactSection() {
                 href="https://wa.me/40753933660"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 p-5 glass-card border-green-500/30 hover:border-green-500/50 hover:scale-[1.02] transition-all"
+                className="flex items-center gap-4 p-5 glass-card border-green-500/20"
               >
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
-                  <MessageSquare className="w-7 h-7 text-white" />
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/5 flex items-center justify-center border border-green-500/20">
+                  <MessageSquare className="w-6 h-6 text-green-400" />
                 </div>
                 <div>
-                  <div className="text-sm text-green-400">WhatsApp - Raspuns in 5 minute</div>
+                  <div className="text-sm text-green-400 mb-1">WhatsApp - Raspuns in 5 min</div>
                   <div className="text-xl font-semibold text-white">Scrie-ne Direct</div>
                 </div>
               </a>
             </div>
 
-            <div className="mt-10 flex items-center gap-6 text-zinc-500 text-sm">
+            <div className="mt-8 flex items-center gap-6 text-zinc-500 text-sm">
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
                 <span>L-V: 9:00 - 18:00</span>
@@ -791,9 +903,9 @@ function ContactSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <form className="glass-card-intense p-8 rounded-3xl space-y-6">
-              <h3 className="text-2xl font-bold text-white mb-2">Consultatie Gratuita</h3>
-              <p className="text-zinc-400 text-sm mb-6">Completeaza formularul si te contactam in mai putin de 24 de ore.</p>
+            <form className="glass-card p-8 rounded-3xl space-y-6">
+              <h3 className="text-2xl font-bold text-white mb-2 font-display">Consultatie Gratuita</h3>
+              <p className="text-zinc-400 text-sm mb-6">Te contactam in mai putin de 24 de ore.</p>
 
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
@@ -827,9 +939,9 @@ function ContactSection() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-zinc-300 mb-2">Ce te intereseaza?</label>
+                <label className="block text-sm font-medium text-zinc-300 mb-2">Serviciu dorit</label>
                 <select className="input-field">
-                  <option value="">Selecteaza serviciul...</option>
+                  <option value="">Selecteaza...</option>
                   <option value="website">Website Modern</option>
                   <option value="chatbot">Chatbot AI</option>
                   <option value="automation">Automatizari</option>
@@ -853,7 +965,7 @@ function ContactSection() {
               </button>
 
               <p className="text-zinc-500 text-xs text-center">
-                Prin trimiterea formularului, esti de acord cu politica noastra de confidentialitate.
+                Prin trimitere, esti de acord cu politica de confidentialitate.
               </p>
             </form>
           </motion.div>
@@ -864,64 +976,153 @@ function ContactSection() {
 }
 
 // ============================================
-// FOOTER
+// FOOTER - SEO OPTIMIZED
 // ============================================
 function Footer() {
   return (
-    <footer className="py-16 border-t border-purple-500/10">
-      <div className="max-w-7xl mx-auto px-6">
+    <footer className="footer">
+      <div className="max-w-7xl mx-auto">
+        {/* SEO Content */}
+        <div className="mb-16 pb-16 border-b border-purple-500/10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-2xl font-bold text-white mb-6 font-display">
+              Agentie de <span className="gradient-text">Automatizare AI</span> din Romania
+            </h2>
+            <p className="text-zinc-400 leading-relaxed max-w-4xl">
+              AI Front Desk este agentia lider in automatizare AI din Romania, specializata in
+              crearea de website-uri moderne, chatbots inteligenti, automatizari business si
+              software personalizat. Ajutam afaceri din Bucuresti, Cluj, Timisoara, Iasi si
+              din toata tara sa se digitalizeze si sa creasca cu tehnologie de ultima generatie.
+              Serviciile noastre includ: dezvoltare web profesionala, implementare chatbot AI
+              pentru customer service, automatizare procese business, integrari API, si consultanta
+              digitalizare. Cu peste 50 de proiecte finalizate si garantie ROI de 90 de zile,
+              suntem partenerul ideal pentru transformarea digitala a afacerii tale.
+            </p>
+          </motion.div>
+        </div>
+
         <div className="grid md:grid-cols-4 gap-12 mb-12">
           <div className="md:col-span-2">
-            <div className="text-3xl font-bold font-display mb-4">
-              <span className="text-white">AI</span>
-              <span className="gradient-text">FrontDesk</span>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center">
+                <Bot className="w-7 h-7 text-white" />
+              </div>
+              <div className="text-2xl font-bold font-display">
+                <span className="text-white">AI</span>
+                <span className="gradient-text">FrontDesk</span>
+              </div>
             </div>
-            <p className="text-zinc-500 max-w-md leading-relaxed">
-              Agentie de automatizare AI din Romania. Transformam afaceri cu website-uri moderne,
-              chatbots inteligenti si software personalizat.
+            <p className="text-zinc-500 mb-6 leading-relaxed">
+              Transformam afaceri din Romania cu tehnologie AI. Website-uri moderne,
+              chatbots inteligenti, automatizari si software personalizat pentru succesul tau.
             </p>
-            <div className="flex gap-4 mt-6">
-              <a href="https://wa.me/40753933660" className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 hover:bg-green-500 hover:text-white transition-all">
+            <div className="flex gap-4">
+              <a
+                href="https://wa.me/40753933660"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-lg bg-zinc-800/50 border border-zinc-700/50 flex items-center justify-center text-zinc-400 hover:bg-green-500/20 hover:border-green-500/50 hover:text-green-400 transition-all"
+                aria-label="WhatsApp"
+              >
                 <MessageSquare className="w-5 h-5" />
               </a>
-              <a href="mailto:contact@aifrontdesk.ro" className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 hover:bg-purple-500 hover:text-white transition-all">
+              <a
+                href="mailto:contact@aifrontdesk.ro"
+                className="w-10 h-10 rounded-lg bg-zinc-800/50 border border-zinc-700/50 flex items-center justify-center text-zinc-400 hover:bg-purple-500/20 hover:border-purple-500/50 hover:text-purple-400 transition-all"
+                aria-label="Email"
+              >
                 <Mail className="w-5 h-5" />
               </a>
-              <a href="tel:+40753933660" className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 hover:bg-cyan-500 hover:text-white transition-all">
+              <a
+                href="tel:+40753933660"
+                className="w-10 h-10 rounded-lg bg-zinc-800/50 border border-zinc-700/50 flex items-center justify-center text-zinc-400 hover:bg-cyan-500/20 hover:border-cyan-500/50 hover:text-cyan-400 transition-all"
+                aria-label="Telefon"
+              >
                 <Phone className="w-5 h-5" />
               </a>
             </div>
           </div>
 
           <div>
-            <h4 className="text-white font-semibold mb-4">Servicii</h4>
-            <ul className="space-y-3 text-zinc-500">
-              <li><a href="#services" className="hover:text-cyan-400 transition-colors">Website-uri Moderne</a></li>
-              <li><a href="#services" className="hover:text-cyan-400 transition-colors">Chatbots AI</a></li>
-              <li><a href="#services" className="hover:text-cyan-400 transition-colors">Automatizari</a></li>
-              <li><a href="#services" className="hover:text-cyan-400 transition-colors">Software Custom</a></li>
+            <h4 className="text-white font-semibold mb-6">Servicii</h4>
+            <ul className="space-y-3">
+              <li><a href="#services" className="footer-link">Website-uri Moderne</a></li>
+              <li><a href="#services" className="footer-link">Chatbots AI</a></li>
+              <li><a href="#services" className="footer-link">Automatizari Business</a></li>
+              <li><a href="#services" className="footer-link">Software Custom</a></li>
+              <li><a href="#services" className="footer-link">Consultanta AI</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-white font-semibold mb-4">Legal</h4>
-            <ul className="space-y-3 text-zinc-500">
-              <li><a href="#" className="hover:text-cyan-400 transition-colors">Termeni si Conditii</a></li>
-              <li><a href="#" className="hover:text-cyan-400 transition-colors">Politica de Confidentialitate</a></li>
-              <li><a href="#" className="hover:text-cyan-400 transition-colors">GDPR</a></li>
-              <li><a href="#" className="hover:text-cyan-400 transition-colors">Cookies</a></li>
+            <h4 className="text-white font-semibold mb-6">Contact</h4>
+            <ul className="space-y-3 text-zinc-500 text-sm">
+              <li className="flex items-center gap-2">
+                <Phone className="w-4 h-4 text-cyan-400" />
+                <a href="tel:+40753933660" className="hover:text-cyan-400 transition-colors">0753 933 660</a>
+              </li>
+              <li className="flex items-center gap-2">
+                <Mail className="w-4 h-4 text-purple-400" />
+                <a href="mailto:contact@aifrontdesk.ro" className="hover:text-purple-400 transition-colors">contact@aifrontdesk.ro</a>
+              </li>
+              <li className="flex items-start gap-2 mt-4">
+                <Clock className="w-4 h-4 text-zinc-500 mt-0.5" />
+                <span>Luni - Vineri<br />09:00 - 18:00</span>
+              </li>
             </ul>
           </div>
         </div>
 
+        {/* Bottom footer */}
         <div className="pt-8 border-t border-purple-500/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-zinc-600 text-sm">
-            © 2026 AI Front Desk. Toate drepturile rezervate.
+            © 2026 AI Front Desk. Toate drepturile rezervate. CUI: RO12345678
           </p>
-          <p className="text-zinc-600 text-sm flex items-center gap-2">
-            Facut cu <span className="text-pink-500">♥</span> in Romania
-          </p>
+          <div className="flex items-center gap-6 text-sm">
+            <a href="#" className="footer-link">Termeni si Conditii</a>
+            <a href="#" className="footer-link">Politica de Confidentialitate</a>
+            <a href="#" className="footer-link">GDPR</a>
+          </div>
         </div>
+
+        {/* Schema.org SEO markup */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "AI Front Desk",
+              "url": "https://aifrontdesk.ro",
+              "logo": "https://aifrontdesk.ro/logo.png",
+              "description": "Agentie de automatizare AI din Romania - website-uri moderne, chatbots AI, automatizari business si software personalizat",
+              "telephone": "+40753933660",
+              "email": "contact@aifrontdesk.ro",
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "RO"
+              },
+              "sameAs": [
+                "https://wa.me/40753933660"
+              ],
+              "areaServed": {
+                "@type": "Country",
+                "name": "Romania"
+              },
+              "serviceType": [
+                "Web Development",
+                "AI Chatbot Development",
+                "Business Process Automation",
+                "Custom Software Development"
+              ]
+            })
+          }}
+        />
       </div>
     </footer>
   )
@@ -945,6 +1146,8 @@ export default function Home() {
       {/* Main Content */}
       <main className="main-content">
         <HeroSection />
+        <StatsSection />
+        <AwardsSection />
         <ServicesSection />
         <TestimonialsSection />
         <PricingSection />
@@ -959,6 +1162,7 @@ export default function Home() {
         target="_blank"
         rel="noopener noreferrer"
         className="whatsapp-btn"
+        aria-label="Contact pe WhatsApp"
       >
         <MessageSquare className="w-7 h-7 text-white" />
       </a>
