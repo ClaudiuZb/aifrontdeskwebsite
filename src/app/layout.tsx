@@ -66,7 +66,9 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: 'your-google-verification-code',
+    google: 'your-google-verification-code', // Get from Google Search Console
+    yandex: 'your-yandex-verification-code', // Optional: Yandex Webmaster
+    // bing: 'your-bing-verification-code', // Optional: Bing Webmaster
   },
   alternates: {
     canonical: 'https://aifrontdesk.io',
@@ -215,7 +217,6 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
-        <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#0a0a0f" />
         <meta name="geo.region" content="RO" />
         <meta name="geo.placename" content="Romania" />

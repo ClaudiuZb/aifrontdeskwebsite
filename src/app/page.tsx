@@ -124,8 +124,8 @@ function Navigation() {
 
   const navLinks = [
     { href: '#services', label: 'Servicii' },
-    { href: '#pricing', label: 'Preturi' },
-    { href: '#testimonials', label: 'Testimoniale' },
+    { href: '#pricing', label: 'Prețuri' },
+    { href: '/blog', label: 'Blog' },
     { href: '#faq', label: 'FAQ' },
     { href: '#contact', label: 'Contact' },
   ]
@@ -380,6 +380,7 @@ function ServicesSection() {
       price: 'de la 500€',
       features: ['Design Custom', 'SEO Optimizat', 'Mobile First', 'Hosting 1 An'],
       color: '#26F4D0',
+      link: '/servicii/website-profesional',
     },
     {
       icon: Bot,
@@ -388,6 +389,7 @@ function ServicesSection() {
       price: 'de la 500€',
       features: ['Disponibil 24/7', 'Integrare WhatsApp', 'Antrenare Custom', 'Analytics'],
       color: '#724CE8',
+      link: '/servicii/chatbot-ai',
     },
     {
       icon: Cpu,
@@ -396,6 +398,7 @@ function ServicesSection() {
       price: 'de la 1000€',
       features: ['Workflow Custom', 'Integrari API', 'Rapoarte Automate', 'Support'],
       color: '#F8CF3E',
+      link: '/servicii/automatizari-business',
     },
     {
       icon: Code,
@@ -404,6 +407,7 @@ function ServicesSection() {
       price: 'de la 2500€',
       features: ['Arhitectura Scalabila', 'API REST', 'Dashboard Admin', 'Documentatie'],
       color: '#FC6756',
+      link: '/servicii/software-custom',
     },
   ]
 
@@ -465,11 +469,11 @@ function ServicesSection() {
               <div className="flex items-center justify-between pt-6 border-t border-purple-500/20">
                 <span className="text-2xl font-bold gradient-text font-display">{service.price}</span>
                 <a
-                  href="#contact"
+                  href={service.link}
                   className="flex items-center gap-2 text-sm font-medium transition-all group-hover:gap-3"
                   style={{ color: service.color }}
                 >
-                  Afla mai mult
+                  Află mai mult
                   <ArrowRight className="w-4 h-4" />
                 </a>
               </div>
