@@ -66,9 +66,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: 'your-google-verification-code', // Get from Google Search Console
-    yandex: 'your-yandex-verification-code', // Optional: Yandex Webmaster
-    // bing: 'your-bing-verification-code', // Optional: Bing Webmaster
+    google: 'x2JfWYeXE4V-7FWUoV4_1UxQtbA7LaSh_xDylu5JDZM',
   },
   alternates: {
     canonical: 'https://aifrontdesk.io',
