@@ -18,12 +18,12 @@ export const metadata: Metadata = {
     title: 'Blog AI Front Desk | Insights despre AI & Automatizări',
     description:
       'Articole, tutoriale și studii de caz despre cum să-ți transformi afacerea cu AI și automatizări.',
-    url: 'https://aifrontdesk.io/blog',
+    url: 'https://aifrontdesk.ro/blog',
     type: 'website',
     locale: 'ro_RO',
   },
   alternates: {
-    canonical: 'https://aifrontdesk.io/blog',
+    canonical: 'https://aifrontdesk.ro/blog',
   },
 }
 

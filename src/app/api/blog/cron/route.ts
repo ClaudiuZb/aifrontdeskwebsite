@@ -66,7 +66,7 @@ export async function GET(request: NextRequest) {
 
     // Generate the blog post
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SITE_URL || 'https://aifrontdesk.io'}/api/blog/generate`,
+      `${process.env.NEXT_PUBLIC_SITE_URL || 'https://aifrontdesk.ro'}/api/blog/generate`,
       {
         method: 'POST',
         headers: {

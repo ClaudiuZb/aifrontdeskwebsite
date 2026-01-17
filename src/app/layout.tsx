@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://aifrontdesk.io'),
+  metadataBase: new URL('https://aifrontdesk.ro'),
   title: {
     default: 'AI Front Desk | Automatizari AI, Website-uri & Software la Comanda',
     template: '%s | AI Front Desk'
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     'aplicatii mobile custom',
     'inteligenta artificiala afaceri'
   ],
-  authors: [{ name: 'AI Front Desk', url: 'https://aifrontdesk.io' }],
+  authors: [{ name: 'AI Front Desk', url: 'https://aifrontdesk.ro' }],
   creator: 'AI Front Desk',
   publisher: 'AI Front Desk SRL',
   formatDetection: {
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'ro_RO',
-    url: 'https://aifrontdesk.io',
+    url: 'https://aifrontdesk.ro',
     siteName: 'AI Front Desk',
     title: 'AI Front Desk | Automatizari AI & Software pentru Afaceri Inteligente',
     description: 'Transformam vizitatorii in clienti cu website-uri moderne, chatbots AI 24/7 si software personalizat. Rezultate garantate.',
@@ -69,10 +69,10 @@ export const metadata: Metadata = {
     google: 'x2JfWYeXE4V-7FWUoV4_1UxQtbA7LaSh_xDylu5JDZM',
   },
   alternates: {
-    canonical: 'https://aifrontdesk.io',
+    canonical: 'https://aifrontdesk.ro',
     languages: {
-      'ro-RO': 'https://aifrontdesk.io',
-      'en-US': 'https://aifrontdesk.io/en',
+      'ro-RO': 'https://aifrontdesk.ro',
+      'en-US': 'https://aifrontdesk.ro/en',
     },
   },
 }
@@ -83,12 +83,12 @@ const jsonLd = {
   '@graph': [
     {
       '@type': 'Organization',
-      '@id': 'https://aifrontdesk.io/#organization',
+      '@id': 'https://aifrontdesk.ro/#organization',
       name: 'AI Front Desk',
-      url: 'https://aifrontdesk.io',
+      url: 'https://aifrontdesk.ro',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://aifrontdesk.io/logo.png',
+        url: 'https://aifrontdesk.ro/logo.png',
         width: 512,
         height: 512,
       },
@@ -107,21 +107,21 @@ const jsonLd = {
     },
     {
       '@type': 'WebSite',
-      '@id': 'https://aifrontdesk.io/#website',
-      url: 'https://aifrontdesk.io',
+      '@id': 'https://aifrontdesk.ro/#website',
+      url: 'https://aifrontdesk.ro',
       name: 'AI Front Desk',
-      publisher: { '@id': 'https://aifrontdesk.io/#organization' },
+      publisher: { '@id': 'https://aifrontdesk.ro/#organization' },
       potentialAction: {
         '@type': 'SearchAction',
-        target: 'https://aifrontdesk.io/search?q={search_term_string}',
+        target: 'https://aifrontdesk.ro/search?q={search_term_string}',
         'query-input': 'required name=search_term_string',
       },
     },
     {
       '@type': 'LocalBusiness',
-      '@id': 'https://aifrontdesk.io/#localbusiness',
+      '@id': 'https://aifrontdesk.ro/#localbusiness',
       name: 'AI Front Desk',
-      image: 'https://aifrontdesk.io/og-image.jpg',
+      image: 'https://aifrontdesk.ro/og-image.jpg',
       telephone: '+40753933660',
       email: 'contact@aifrontdesk.ro',
       address: {
@@ -141,7 +141,7 @@ const jsonLd = {
       '@type': 'Service',
       name: 'Automatizari AI pentru Business',
       description: 'Chatbots inteligenti 24/7, procesare documente cu AI, email marketing automatizat',
-      provider: { '@id': 'https://aifrontdesk.io/#organization' },
+      provider: { '@id': 'https://aifrontdesk.ro/#organization' },
       serviceType: 'AI Automation',
       areaServed: 'Romania',
       hasOfferCatalog: {

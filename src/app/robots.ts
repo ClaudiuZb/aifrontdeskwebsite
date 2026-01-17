@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 
 // Robots.txt - optimized for 2026 SEO standards
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://aifrontdesk.io'
+  const baseUrl = 'https://aifrontdesk.ro'
 
   return {
     rules: [

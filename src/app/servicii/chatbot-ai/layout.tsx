@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     title: 'Chatbot AI Romania | Vinde 24/7 fara Angajati Extra',
     description:
       'Transforma vizitatorii in clienti cu chatbot AI. Raspunde instant, califica lead-uri, programeaza intalniri - non-stop.',
-    url: 'https://aifrontdesk.io/servicii/chatbot-ai',
+    url: 'https://aifrontdesk.ro/servicii/chatbot-ai',
     type: 'website',
     locale: 'ro_RO',
   },
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     description: 'Cel mai avansat chatbot AI pentru afaceri din Romania. ROI garantat in 90 de zile.',
   },
   alternates: {
-    canonical: 'https://aifrontdesk.io/servicii/chatbot-ai',
+    canonical: 'https://aifrontdesk.ro/servicii/chatbot-ai',
   },
 }
 
@@ -48,7 +48,7 @@ const jsonLd = {
   provider: {
     '@type': 'Organization',
     name: 'AI Front Desk',
-    url: 'https://aifrontdesk.io',
+    url: 'https://aifrontdesk.ro',
   },
   serviceType: 'AI Chatbot Implementation',
   areaServed: {

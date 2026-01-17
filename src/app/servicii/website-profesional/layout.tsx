@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     title: 'Creare Website Profesional Romania | Design Modern 2026',
     description:
       'Website-uri care convertesc vizitatori in clienti. Design modern, viteza maxima, SEO optimizat. De la 500€.',
-    url: 'https://aifrontdesk.io/servicii/website-profesional',
+    url: 'https://aifrontdesk.ro/servicii/website-profesional',
     type: 'website',
     locale: 'ro_RO',
   },
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     description: 'Website-uri moderne care vand. Next.js, React, SEO optimizat. De la 500€.',
   },
   alternates: {
-    canonical: 'https://aifrontdesk.io/servicii/website-profesional',
+    canonical: 'https://aifrontdesk.ro/servicii/website-profesional',
   },
 }
 
@@ -47,7 +47,7 @@ const jsonLd = {
   provider: {
     '@type': 'Organization',
     name: 'AI Front Desk',
-    url: 'https://aifrontdesk.io',
+    url: 'https://aifrontdesk.ro',
   },
   serviceType: 'Web Development',
   areaServed: {

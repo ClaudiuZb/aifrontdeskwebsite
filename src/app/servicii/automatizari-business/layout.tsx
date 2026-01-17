@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     title: 'Automatizari Business Romania | 20+ Ore Economisite Saptamanal',
     description:
       'Elimina munca repetitiva cu automatizari inteligente. Conectam toate sistemele tale intr-un workflow fluid.',
-    url: 'https://aifrontdesk.io/servicii/automatizari-business',
+    url: 'https://aifrontdesk.ro/servicii/automatizari-business',
     type: 'website',
     locale: 'ro_RO',
   },
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     description: 'Economisesti 20+ ore pe saptamana cu automatizari inteligente. ROI garantat.',
   },
   alternates: {
-    canonical: 'https://aifrontdesk.io/servicii/automatizari-business',
+    canonical: 'https://aifrontdesk.ro/servicii/automatizari-business',
   },
 }
 
@@ -47,7 +47,7 @@ const jsonLd = {
   provider: {
     '@type': 'Organization',
     name: 'AI Front Desk',
-    url: 'https://aifrontdesk.io',
+    url: 'https://aifrontdesk.ro',
   },
   serviceType: 'Business Process Automation',
   areaServed: {

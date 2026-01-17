@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const categoryLabel = BLOG_CATEGORIES[post.category as BlogCategory]?.label || post.category
-  const baseUrl = 'https://aifrontdesk.io'
+  const baseUrl = 'https://aifrontdesk.ro'
 
   return {
     title: post.title,
@@ -89,7 +89,7 @@ function generateArticleJsonLd(post: {
   tags: string[]
   reading_time: number
 }) {
-  const baseUrl = 'https://aifrontdesk.io'
+  const baseUrl = 'https://aifrontdesk.ro'
   const categoryLabel = BLOG_CATEGORIES[post.category]?.label || post.category
 
   return {

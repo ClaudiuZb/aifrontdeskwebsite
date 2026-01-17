@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     title: 'Software Custom Romania | Aplicatii care Rezolva Probleme Reale',
     description:
       'Dezvoltam software personalizat pentru afacerea ta. Aplicatii web, mobile, platforme SaaS. De la 5000€.',
-    url: 'https://aifrontdesk.io/servicii/software-custom',
+    url: 'https://aifrontdesk.ro/servicii/software-custom',
     type: 'website',
     locale: 'ro_RO',
   },
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     description: 'Aplicatii web, mobile, SaaS. Arhitectura scalabila, echipa senior. De la 5000€.',
   },
   alternates: {
-    canonical: 'https://aifrontdesk.io/servicii/software-custom',
+    canonical: 'https://aifrontdesk.ro/servicii/software-custom',
   },
 }
 
@@ -47,7 +47,7 @@ const jsonLd = {
   provider: {
     '@type': 'Organization',
     name: 'AI Front Desk',
-    url: 'https://aifrontdesk.io',
+    url: 'https://aifrontdesk.ro',
   },
   serviceType: 'Custom Software Development',
   areaServed: {

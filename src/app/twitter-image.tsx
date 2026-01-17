@@ -155,7 +155,7 @@ export default async function Image() {
             color: '#71717a',
           }}
         >
-          aifrontdesk.io • ROI Garantat in 90 de Zile
+          aifrontdesk.ro • ROI Garantat in 90 de Zile
         </div>
       </div>
     ),

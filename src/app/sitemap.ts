@@ -3,7 +3,7 @@ import { getBlogPosts } from '@/lib/blog'
 
 // Dynamic sitemap generation - Next.js 15 standard
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://aifrontdesk.io'
+  const baseUrl = 'https://aifrontdesk.ro'
   const currentDate = new Date().toISOString()
 
   // Main pages
