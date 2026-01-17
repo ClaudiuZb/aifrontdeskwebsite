@@ -46,7 +46,6 @@ export async function generateBlogCoverImage(
       prompt: imagePrompt,
       size: '1536x1024', // Landscape for blog covers
       quality: 'low', // Most cost-effective (~400 tokens)
-      // @ts-expect-error - background parameter exists but may not be in types yet
       background: 'opaque',
       output_format: 'jpeg', // Faster than PNG
     })
