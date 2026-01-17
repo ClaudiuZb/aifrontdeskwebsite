@@ -33,20 +33,9 @@ import {
 } from 'lucide-react'
 import dynamic from 'next/dynamic'
 
-// Dynamic import for 3D Experience
+// Dynamic import for 3D Experience - no loading screen for faster perceived load
 const Experience3D = dynamic(() => import('@/components/Experience3D'), {
   ssr: false,
-  loading: () => (
-    <div className="loading-screen">
-      <div className="loading-logo">
-        <span className="text-white">AI</span>
-        <span className="gradient-text">FrontDesk</span>
-      </div>
-      <div className="loading-bar">
-        <div className="loading-bar-fill" />
-      </div>
-    </div>
-  ),
 })
 
 // ============================================
@@ -307,19 +296,6 @@ function HeroSection() {
           </a>
         </motion.div>
       </div>
-
-      {/* Scroll Indicator */}
-      <motion.div
-        className="scroll-indicator"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-      >
-        <span>Scroll</span>
-        <div className="scroll-arrow">
-          <ArrowDown className="w-5 h-5" />
-        </div>
-      </motion.div>
 
       {/* Side navigation dots */}
       <div className="menu-button">
