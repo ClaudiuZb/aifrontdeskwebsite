@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { getBlogPostBySlug } from '@/lib/blog'
-import { BLOG_CATEGORIES } from '@/types/blog'
+import { BLOG_CATEGORIES, BlogCategory } from '@/types/blog'
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
-  const categoryLabel = BLOG_CATEGORIES[post.category]?.label || post.category
+  const categoryLabel = BLOG_CATEGORIES[post.category as BlogCategory]?.label || post.category
   const baseUrl = 'https://aifrontdesk.io'
 
   return {
@@ -84,8 +84,8 @@ function generateArticleJsonLd(post: {
   author: string
   published_at: string | null
   updated_at: string | null
-  cover_image: string | null
-  category: string
+  cover_image?: string | null
+  category: BlogCategory
   tags: string[]
   reading_time: number
 }) {
@@ -174,7 +174,10 @@ export default async function BlogPostLayout({ params, children }: Props) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(generateArticleJsonLd(post)),
+            __html: JSON.stringify(generateArticleJsonLd({
+              ...post,
+              category: post.category as BlogCategory,
+            })),
           }}
         />
       )}
